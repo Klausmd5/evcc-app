@@ -14,11 +14,11 @@ function SettingsScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { serverUrl, basicAuth, updateServerUrl } = useAppContext();
+  const { serverUrl, basicAuth, mtlsRequired, updateServerUrl } = useAppContext();
 
   const saveServer = React.useCallback(
-    (url: string, basicAuth: BasicAuth) => {
-      updateServerUrl(url, basicAuth);
+    (url: string, basicAuth: BasicAuth, nextMtlsRequired: boolean) => {
+      updateServerUrl(url, basicAuth, nextMtlsRequired);
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
@@ -31,6 +31,7 @@ function SettingsScreen({
       <ServerForm
         url={serverUrl}
         basicAuth={basicAuth}
+        mtlsRequired={mtlsRequired}
         serverSelected={saveServer}
       />
     ),
@@ -57,7 +58,7 @@ function SettingsScreen({
           status="danger"
           onPress={() => {
             navigation.goBack();
-            updateServerUrl("", { required: false });
+            updateServerUrl("", { required: false }, false);
           }}
         >
           {t("servers.removeServer")}

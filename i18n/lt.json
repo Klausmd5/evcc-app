@@ -22,7 +22,8 @@
       "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite įdiegimą.",
       "serverNotAvailable": "Serveris nepasiekiamas. Patikrinkite adresą.",
       "specify": "Įveskite adresą",
-      "user": "Vartotojas"
+      "user": "Vartotojas",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Pašalinti serverį",
     "search": {

@@ -15,7 +15,8 @@
       "serverIncompatible": "Η εγκατάσταση του evcc δεν είναι ακόμη συμβατή με την εφαρμογή. Ενημερώστε την εγκατάστασή σας.",
       "serverNotAvailable": "Ο διακομιστής δεν είναι διαθέσιμος. Ελέγξτε τη διεύθυνση.",
       "specify": "Εισάγετε τη διεύθυνση χειροκίνητα",
-      "user": "Χρήστης"
+      "user": "Χρήστης",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Κατάργηση διακομιστή",
     "search": {

@@ -15,7 +15,8 @@
       "serverIncompatible": "A instalação evcc ainda não é compatível com a aplicação. Atualize a sua instalação.",
       "serverNotAvailable": "Servidor não encontrado. Por favor, verifique o endereço.",
       "specify": "Introduzir o endereço manualmente",
-      "user": "Utilizador"
+      "user": "Utilizador",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Apagar servidor",
     "search": {

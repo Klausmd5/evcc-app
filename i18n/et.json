@@ -22,7 +22,8 @@
       "serverIncompatible": "See elektrisõiduki sidekontroller ei ühildu veel rakendusega. Palun proovi kas tema tarkvara uuendamine aitaks.",
       "serverNotAvailable": "Server pole leitav. Palun kontrolli aadressi.",
       "specify": "Sisesta aadress käsitsi",
-      "user": "Kasutaja"
+      "user": "Kasutaja",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Eemalda server",
     "search": {

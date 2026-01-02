@@ -22,7 +22,8 @@
       "serverIncompatible": "Instalace evcc ještě není kompatibilní s aplikací. Aktualizujte svou instalaci.",
       "serverNotAvailable": "Server není k dispozici. Zkontrolujte prosím adresu.",
       "specify": "Zadejte adresu ručně",
-      "user": "Uživatel"
+      "user": "Uživatel",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Odebrat server",
     "search": {

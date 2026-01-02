@@ -15,7 +15,8 @@
       "serverIncompatible": "evcc örneği henüz uygulamayla uyumlu değil. Kurulumunuzu güncelleyin.",
       "serverNotAvailable": "Sunucu mevcut değil. Lütfen adressi kontrol edin.",
       "specify": "Adresi manuel gir",
-      "user": "Kullanıcı"
+      "user": "Kullanıcı",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Sunucuyu sil",
     "search": {

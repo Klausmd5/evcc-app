@@ -13,7 +13,7 @@ function ServerManualScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { serverUrl, updateServerUrl } = useAppContext();
+  const { serverUrl, mtlsRequired, updateServerUrl } = useAppContext();
 
   const { url: initialUrl = "", username, password } = route.params || {};
 
@@ -30,11 +30,15 @@ function ServerManualScreen({
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
-    async (nextUrl: string, nextBasicAuth: BasicAuth) => {
+    async (
+      nextUrl: string,
+      nextBasicAuth: BasicAuth,
+      nextMtlsRequired: boolean,
+    ) => {
       console.log("serverSelected");
       setUrl(nextUrl);
       setBasicAuth(nextBasicAuth);
-      await updateServerUrl(nextUrl, nextBasicAuth);
+      await updateServerUrl(nextUrl, nextBasicAuth, nextMtlsRequired);
 
       // After setting serverUrl, navigate to Main which will be available in the new stack
       navigation.reset({
@@ -69,6 +73,7 @@ function ServerManualScreen({
         <ServerForm
           url={url}
           basicAuth={basicAuth}
+          mtlsRequired={mtlsRequired}
           serverSelected={serverSelected}
         />
       </View>

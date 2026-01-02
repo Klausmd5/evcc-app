@@ -15,7 +15,8 @@
       "serverIncompatible": "L'instance evcc n'est pas encore compatible avec l'application. Mettez à jour votre installation.",
       "serverNotAvailable": "Le serveur n'est pas disponible. Veuillez vérifier l'adresse.",
       "specify": "Entrer l'adresse manuellement",
-      "user": "Utilisateur"
+      "user": "Utilisateur",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Supprimer le serveur",
     "search": {

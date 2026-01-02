@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
+import { Platform } from "react-native";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { useTranslation } from "react-i18next";
@@ -8,12 +9,18 @@ import { BasicAuth } from "types";
 interface ServerFormProps {
   url: string;
   basicAuth: BasicAuth;
-  serverSelected: (url: string, basicAuth: BasicAuth) => void;
+  mtlsRequired: boolean;
+  serverSelected: (
+    url: string,
+    basicAuth: BasicAuth,
+    mtlsRequired: boolean,
+  ) => void;
 }
 
 export default function ServerForm({
   url,
   basicAuth,
+  mtlsRequired,
   serverSelected,
 }: ServerFormProps) {
   const { t } = useTranslation();
@@ -25,9 +32,12 @@ export default function ServerForm({
 
   const [internalUrl, setInternalUrl] = useState(url);
   const [internalAuth, setInternalAuth] = useState(basicAuth);
+  const [internalMtlsRequired, setInternalMtlsRequired] =
+    useState(mtlsRequired);
 
   React.useEffect(() => setInternalUrl(url), [url]);
   React.useEffect(() => setInternalAuth(basicAuth), [basicAuth]);
+  React.useEffect(() => setInternalMtlsRequired(mtlsRequired), [mtlsRequired]);
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
@@ -38,8 +48,12 @@ export default function ServerForm({
     setInProgress(true);
 
     try {
+      if (internalMtlsRequired && Platform.OS === "android") {
+        serverSelected(cleanUrl, internalAuth, internalMtlsRequired);
+        return;
+      }
       const finalUrl = await verifyEvccServer(cleanUrl, internalAuth);
-      serverSelected(finalUrl, internalAuth);
+      serverSelected(finalUrl, internalAuth, internalMtlsRequired);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -75,6 +89,16 @@ export default function ServerForm({
       >
         {t("servers.manually.authenticationRequired")}
       </CheckBox>
+
+      {Platform.OS === "android" ? (
+        <CheckBox
+          style={{ marginTop: 8, marginBottom: 16 }}
+          checked={internalMtlsRequired}
+          onChange={(v) => setInternalMtlsRequired(v)}
+        >
+          {t("servers.manually.mtlsRequired")}
+        </CheckBox>
+      ) : null}
 
       {internalAuth.required && (
         <>

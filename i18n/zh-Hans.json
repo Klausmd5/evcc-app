@@ -15,7 +15,8 @@
       "serverIncompatible": "此 evcc 实例尚未兼容应用。请更新你的安装。",
       "serverNotAvailable": "服务器不可达。请检查地址。",
       "specify": "手动输入地址",
-      "user": "用户"
+      "user": "用户",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "移除服务器",
     "search": {
