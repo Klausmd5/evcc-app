@@ -62,6 +62,7 @@ export default ({ config }: ConfigContext) =>
         ["./scripts/fdroid/removeDKBuildId.ts"],
         ["./scripts/fdroid/disableDependencyMetadata.ts"],
         ["./scripts/fdroid/excludeNonfreeDependencies.ts"],
+        ["./scripts/android/splashScreenV33.ts"],
         [
           "expo-build-properties",
           {
