@@ -33,47 +33,51 @@ index 251939e..62a6dff 100644
  
 +    @Override
 +    public void onReceivedClientCertRequest(final WebView view, final ClientCertRequest request) {
++        Log.i(TAG, "onReceivedClientCertRequest");
 +        Activity activity = null;
 +        if (view.getContext() instanceof ThemedReactContext) {
 +            activity = ((ThemedReactContext) view.getContext()).getCurrentActivity();
 +        }
 +
 +        if (activity == null) {
++            Log.w(TAG, "Client certificate request without activity, cancelling.");
 +            request.cancel();
 +            return;
 +        }
 +
-+        KeyChain.choosePrivateKeyAlias(
-+            activity,
-+            new KeyChainAliasCallback() {
-+                @Override
-+                public void alias(final String alias) {
-+                    if (alias == null) {
-+                        request.cancel();
-+                        return;
-+                    }
-+                    new Thread(() -> {
-+                        try {
-+                            PrivateKey privateKey = KeyChain.getPrivateKey(activity, alias);
-+                            X509Certificate[] chain = KeyChain.getCertificateChain(activity, alias);
-+                            if (privateKey != null && chain != null) {
-+                                request.proceed(privateKey, chain);
-+                            } else {
++        activity.runOnUiThread(() -> KeyChain.choosePrivateKeyAlias(
++                activity,
++                new KeyChainAliasCallback() {
++                    @Override
++                    public void alias(final String alias) {
++                        if (alias == null) {
++                            Log.w(TAG, "Client certificate selection cancelled.");
++                            request.cancel();
++                            return;
++                        }
++                        new Thread(() -> {
++                            try {
++                                PrivateKey privateKey = KeyChain.getPrivateKey(activity, alias);
++                                X509Certificate[] chain = KeyChain.getCertificateChain(activity, alias);
++                                if (privateKey != null && chain != null) {
++                                    request.proceed(privateKey, chain);
++                                } else {
++                                    Log.w(TAG, "Client certificate missing key or chain.");
++                                    request.cancel();
++                                }
++                            } catch (Exception e) {
++                                Log.e(TAG, "Failed to provide client certificate", e);
 +                                request.cancel();
 +                            }
-+                        } catch (Exception e) {
-+                            Log.e(TAG, "Failed to provide client certificate", e);
-+                            request.cancel();
-+                        }
-+                    }).start();
-+                }
-+            },
-+            request.getKeyTypes(),
-+            request.getPrincipals(),
-+            request.getHost(),
-+            request.getPort(),
-+            null
-+        );
++                        }).start();
++                    }
++                },
++                request.getKeyTypes(),
++                request.getPrincipals(),
++                request.getHost(),
++                request.getPort(),
++                null
++        ));
 +    }
 +
      @Override
