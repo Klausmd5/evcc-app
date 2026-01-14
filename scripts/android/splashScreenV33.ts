@@ -5,6 +5,7 @@ import path from "path";
 const STYLE_ITEM =
   '<item name="android:windowSplashScreenBehavior">icon_preferred</item>';
 const APPCOMPAT_PARENT = 'parent="Theme.AppCompat.Light.NoActionBar"';
+const SPLASH_STYLE = "Theme.App.SplashScreen";
 
 function ensureAppCompatParent(contents: string) {
   if (!contents.includes('<style name="AppTheme"')) {
@@ -21,6 +22,27 @@ function ensureAppCompatParent(contents: string) {
     .replace(/\s+parent="[^"]*"/, "")
     .replace(/<style name="AppTheme"/, `<style name="AppTheme" ${APPCOMPAT_PARENT}`);
   return contents.replace(match[0], replaced);
+}
+
+function ensureSplashScreenBehavior(contents: string) {
+  if (contents.includes("windowSplashScreenBehavior")) {
+    return contents;
+  }
+  const match = contents.match(
+    new RegExp(`<style name="${SPLASH_STYLE}"[^>]*>`),
+  );
+  if (!match) {
+    const insertion = [
+      `  <style name="${SPLASH_STYLE}" parent="Theme.SplashScreen">`,
+      `    ${STYLE_ITEM}`,
+      "  </style>",
+    ].join("\n");
+    if (contents.includes("</resources>")) {
+      return contents.replace("</resources>", `${insertion}\n</resources>`);
+    }
+    return [contents.trimEnd(), "", insertion, ""].join("\n");
+  }
+  return contents.replace(match[0], `${match[0]}\n    ${STYLE_ITEM}`);
 }
 
 function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
@@ -42,23 +64,14 @@ function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
 function ensureV33Styles(stylesPath: string) {
   if (fs.existsSync(stylesPath)) {
     const existing = fs.readFileSync(stylesPath, "utf8");
-    if (existing.includes("windowSplashScreenBehavior")) {
-      return;
-    }
-    if (existing.includes('<style name="AppTheme"')) {
-      let updated = ensureAppCompatParent(existing);
-      updated = updated.replace(
-        /<style name="AppTheme"[^>]*>/,
-        (match) => `${match}\n    ${STYLE_ITEM}`,
-      );
-      fs.writeFileSync(stylesPath, updated);
-      return;
-    }
+    const updated = ensureSplashScreenBehavior(existing);
+    fs.writeFileSync(stylesPath, updated);
+    return;
   }
 
   const contents = [
     "<resources>",
-    `  <style name="AppTheme" ${APPCOMPAT_PARENT}>`,
+    `  <style name="${SPLASH_STYLE}" parent="Theme.SplashScreen">`,
     `    ${STYLE_ITEM}`,
     "  </style>",
     "</resources>",
