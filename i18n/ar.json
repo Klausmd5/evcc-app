@@ -1,1 +1,7 @@
-{}
+{
+  "servers": {
+    "manually": {
+      "mtlsRequired": "Use mTLS client certificate (Android)"
+    }
+  }
+}

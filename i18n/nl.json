@@ -22,7 +22,8 @@
       "serverIncompatible": "De evcc server is nog niet app-compatible. Update de installatie.",
       "serverNotAvailable": "Server onbereikbaar. Controleer het adres.",
       "specify": "Adres handmatig invoeren",
-      "user": "Gebruiker"
+      "user": "Gebruiker",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Server verwijderen",
     "search": {

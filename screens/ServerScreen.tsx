@@ -124,7 +124,7 @@ export default function ServerScreen({
     async (url: string) => {
       try {
         const finalUrl = await verifyEvccServer(url, { required: false });
-        updateServerUrl(finalUrl, { required: false });
+        updateServerUrl(finalUrl, { required: false }, false);
       } catch (error) {
         Alert.alert((error as Error).message);
       }

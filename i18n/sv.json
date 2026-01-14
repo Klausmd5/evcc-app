@@ -15,7 +15,8 @@
       "serverIncompatible": "Evcc-versionen är inte app-kompatibel. Uppgradera din installation.",
       "serverNotAvailable": "Servern är inte tillgänglig. Vänligen kolla adressen.",
       "specify": "Ange adress",
-      "user": "Användare"
+      "user": "Användare",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Ta bort server",
     "search": {

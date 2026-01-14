@@ -22,7 +22,8 @@
       "serverIncompatible": "Evcc-palvelimen versiosi ei ole vielä sovellusyhteensopiva. Päivitä asennuksesi.",
       "serverNotAvailable": "Palvelin ei ole käytettävissä. Tarkista osoite.",
       "specify": "Anna osoite manuaalisesti",
-      "user": "Käyttäjä"
+      "user": "Käyttäjä",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Poista palvelin",
     "search": {

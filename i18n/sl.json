@@ -15,7 +15,8 @@
       "serverIncompatible": "Instanca evcc še ni združljiva z aplikacijo. Prosim posodobite verzijo.",
       "serverNotAvailable": "Strežnik ni na voljo. Preverite naslov.",
       "specify": "Ročni vnos naslova",
-      "user": "Uporabnik"
+      "user": "Uporabnik",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Odstranite strežnik",
     "search": {

@@ -15,7 +15,8 @@
       "serverIncompatible": "ஈ.வி.சி.சி நிகழ்வு இன்னும் பயன்பாட்டு-இணக்கமாக இல்லை. உங்கள் நிறுவலைப் புதுப்பிக்கவும்.",
       "serverNotAvailable": "சேவையகம் கிடைக்கவில்லை. முகவரியை சரிபார்க்கவும்.",
       "specify": "முகவரியை கைமுறையாக உள்ளிடவும்",
-      "user": "பயனர்"
+      "user": "பயனர்",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "சேவையகத்தை அகற்று",
     "search": {

@@ -15,7 +15,8 @@
       "serverIncompatible": "D'evcc Instanz ass nach net App-kompatibel. Aktualiséier deng Installatioun.",
       "serverNotAvailable": "Server net erreechbar. Iwwerpréif wgl. d'Adress.",
       "specify": "Adress manuell aginn",
-      "user": "Benotzer"
+      "user": "Benotzer",
+      "mtlsRequired": "Use mTLS client certificate (Android)"
     },
     "removeServer": "Server ewechhuelen",
     "search": {
