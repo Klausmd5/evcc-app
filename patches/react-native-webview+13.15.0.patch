@@ -50,9 +50,8 @@ index 251939e..62a6dff 100644
 +        final String host = request.getHost();
 +        final int port = request.getPort();
 +        Log.i(TAG, "Client cert request host=" + host + " port=" + port);
-+        if (keyTypes == null || keyTypes.length == 0) {
-+            Log.w(TAG, "Client cert request has no key types; showing chooser without constraints.");
-+        }
++        Log.w(TAG, "Client cert request keyTypes=" + (keyTypes == null ? 0 : keyTypes.length) +
++                " principals=" + (principals == null ? 0 : principals.length) + "; forcing chooser without constraints.");
 +        activity.runOnUiThread(() -> KeyChain.choosePrivateKeyAlias(
 +                activity,
 +                new KeyChainAliasCallback() {
@@ -80,8 +79,8 @@ index 251939e..62a6dff 100644
 +                        }).start();
 +                    }
 +                },
-+                keyTypes == null || keyTypes.length == 0 ? null : keyTypes,
-+                principals == null || principals.length == 0 ? null : principals,
++                null,
++                null,
 +                host,
 +                port,
 +                null
