@@ -50,15 +50,14 @@ function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
     return;
   }
   const contents = fs.readFileSync(stylesPath, "utf8");
-  if (!contents.includes("windowSplashScreenBehavior")) {
-    return;
-  }
   let updated = contents.replace(
     /^\s*<item name="android:windowSplashScreenBehavior">.*<\/item>\s*\n?/gm,
     "",
   );
   updated = ensureAppCompatParent(updated);
-  fs.writeFileSync(stylesPath, updated);
+  if (updated !== contents) {
+    fs.writeFileSync(stylesPath, updated);
+  }
 }
 
 function ensureV33Styles(stylesPath: string) {
