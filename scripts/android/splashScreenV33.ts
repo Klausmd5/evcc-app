@@ -55,9 +55,7 @@ function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
     "",
   );
   updated = ensureAppCompatParent(updated);
-  if (updated !== contents) {
-    fs.writeFileSync(stylesPath, updated);
-  }
+  fs.writeFileSync(stylesPath, updated);
 }
 
 function ensureV33Styles(stylesPath: string) {
