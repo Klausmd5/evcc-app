@@ -4,6 +4,24 @@ import path from "path";
 
 const STYLE_ITEM =
   '<item name="android:windowSplashScreenBehavior">icon_preferred</item>';
+const APPCOMPAT_PARENT = 'parent="Theme.AppCompat.Light.NoActionBar"';
+
+function ensureAppCompatParent(contents: string) {
+  if (!contents.includes('<style name="AppTheme"')) {
+    return contents;
+  }
+  const match = contents.match(/<style name="AppTheme"[^>]*>/);
+  if (!match) {
+    return contents;
+  }
+  if (match[0].includes("Theme.AppCompat")) {
+    return contents;
+  }
+  const replaced = match[0]
+    .replace(/\s+parent="[^"]*"/, "")
+    .replace(/<style name="AppTheme"/, `<style name="AppTheme" ${APPCOMPAT_PARENT}`);
+  return contents.replace(match[0], replaced);
+}
 
 function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
   if (!fs.existsSync(stylesPath)) {
@@ -13,10 +31,11 @@ function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
   if (!contents.includes("windowSplashScreenBehavior")) {
     return;
   }
-  const updated = contents.replace(
+  let updated = contents.replace(
     /^\s*<item name="android:windowSplashScreenBehavior">.*<\/item>\s*\n?/gm,
     "",
   );
+  updated = ensureAppCompatParent(updated);
   fs.writeFileSync(stylesPath, updated);
 }
 
@@ -26,10 +45,11 @@ function ensureV33Styles(stylesPath: string) {
     if (existing.includes("windowSplashScreenBehavior")) {
       return;
     }
-    if (existing.includes('<style name="AppTheme">')) {
-      const updated = existing.replace(
-        /<style name="AppTheme">/,
-        `<style name="AppTheme">\n    ${STYLE_ITEM}`,
+    if (existing.includes('<style name="AppTheme"')) {
+      let updated = ensureAppCompatParent(existing);
+      updated = updated.replace(
+        /<style name="AppTheme"[^>]*>/,
+        (match) => `${match}\n    ${STYLE_ITEM}`,
       );
       fs.writeFileSync(stylesPath, updated);
       return;
@@ -38,7 +58,7 @@ function ensureV33Styles(stylesPath: string) {
 
   const contents = [
     "<resources>",
-    "  <style name=\"AppTheme\">",
+    `  <style name="AppTheme" ${APPCOMPAT_PARENT}>`,
     `    ${STYLE_ITEM}`,
     "  </style>",
     "</resources>",
