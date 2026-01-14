@@ -10,20 +10,28 @@ function removeSplashBehaviorFromDefaultStyles(stylesPath: string) {
     return;
   }
   const contents = fs.readFileSync(stylesPath, "utf8");
-  if (!contents.includes(STYLE_ITEM)) {
+  if (!contents.includes("windowSplashScreenBehavior")) {
     return;
   }
-  const updated = contents
-    .split("\n")
-    .filter((line) => line.trim() !== STYLE_ITEM)
-    .join("\n");
+  const updated = contents.replace(
+    /^\s*<item name="android:windowSplashScreenBehavior">.*<\/item>\s*\n?/gm,
+    "",
+  );
   fs.writeFileSync(stylesPath, updated);
 }
 
 function ensureV33Styles(stylesPath: string) {
   if (fs.existsSync(stylesPath)) {
     const existing = fs.readFileSync(stylesPath, "utf8");
-    if (existing.includes(STYLE_ITEM)) {
+    if (existing.includes("windowSplashScreenBehavior")) {
+      return;
+    }
+    if (existing.includes('<style name="AppTheme">')) {
+      const updated = existing.replace(
+        /<style name="AppTheme">/,
+        `<style name="AppTheme">\n    ${STYLE_ITEM}`,
+      );
+      fs.writeFileSync(stylesPath, updated);
       return;
     }
   }

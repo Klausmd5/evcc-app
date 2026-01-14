@@ -2,6 +2,8 @@ import "tsx/cjs";
 import { AppJSONConfig, ConfigContext } from "expo/config";
 import { SCHEME } from "utils/constants";
 
+process.env.NODE_ENV ??= "production";
+
 export default ({ config }: ConfigContext) =>
   ({
     ...config,
